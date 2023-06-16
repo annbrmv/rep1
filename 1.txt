@@ -1,0 +1,116 @@
+#include <iostream>
+#include <ctime>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    srand(time(0));
+    int n, max_index, min_index;
+    cout << "Enter n: "; cin >> n;
+    int* mas = new int[n];
+    float negative = 0, min = 0, max = 0, mult = 1;
+
+    for (int i = 0; i < n; i++)
+    {
+        mas[i] = (100 - rand() % 200 + 1) / sqrt(rand() % 10 + 1);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << mas[i] << endl;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (mas[i] < 0)
+        {
+            negative += mas[i];
+        }
+        if (min > mas[i])
+        {
+            min = mas[i];
+            min_index = i;
+        }
+        if (max < mas[i])
+        {
+            max = mas[i];
+            max_index = i;
+        }
+    }
+
+    if (max == 0)
+    {
+        float temp = min;
+        for (int i = 0; i < n; i++)
+        {
+            if (mas[i] > temp)
+            {
+                temp = mas[i];
+                max = temp;
+                max_index = i;
+            }
+        }
+    }
+
+    if (min == 0)
+    {
+        float temp = max;
+        for (int i = 0; i < n; i++)
+        {
+            if (mas[i] < temp)
+            {
+                temp = mas[i];
+                min = temp;
+                min_index = i;
+            }
+        }
+    }
+
+    if (min_index > max_index)
+    {
+        int temp = max_index;
+        max_index = min_index;
+        min_index = temp;
+    }
+
+    min_index++;
+
+    if (min_index == max_index)
+        cout << "\n\nMultiplication: No such elements" << endl;
+    else
+    {
+        for (; min_index < max_index; min_index++)
+        {
+            mult *= mas[min_index];
+        }
+        cout << "Multiplication: " << mult << endl;
+    }
+
+    cout << "Negative elements sum: " << negative << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (mas[i] > mas[j])
+            {
+                float temp = mas[i];
+                mas[i] = mas[j];
+                mas[j] = temp;
+            }
+        }
+    }
+
+    cout << "\n\nSorted:\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << mas[i] << endl;
+    }
+
+    delete[]mas;
+
+    system("pause");
+    return 0;
+}
